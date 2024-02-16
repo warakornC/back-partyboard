@@ -86,6 +86,8 @@ model Follow {
   followingId  Int      @map("following_id")
   followed    User     @relation(name:"followed", fields: [followedId], references: [id])
   followedId  Int      @map("followed_id")
+
+  @@map("follows")
 }
 
 model Skill {
@@ -123,6 +125,8 @@ model Reply {
   id         Int      @id @default(autoincrement())
   question   Question @relation(fields: [questionId], references: [id])
   questionId Int      @map("question_id")
+  test  String?
+  answer Boolean  
   attemp     Attemp[]
 
   @@map("replys")
@@ -151,4 +155,6 @@ model Report {
   text      String?
   status    Status  @default(Uncheck)
   detail    String?
+
+  @@map("reports")
 }

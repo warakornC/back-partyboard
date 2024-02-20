@@ -33,7 +33,7 @@ model User {
   lastName              String    @map("last_name")
   citizenIdentifyNumber String    @map("citizen_identify_number")
   email                 String?   @unique
-  mobile                String?   @unique
+  mobile                String?   
   password              String
   profileImage          String?   @map("profile_image")
   coverImage            String?   @map("cover_image")

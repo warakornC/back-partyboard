@@ -33,7 +33,7 @@ model User {
   lastName              String    @map("last_name")
   citizenIdentifyNumber String    @map("citizen_identify_number")
   email                 String?   @unique
-  mobile                String?   
+  mobile                String?
   password              String
   profileImage          String?   @map("profile_image")
   coverImage            String?   @map("cover_image")
@@ -45,7 +45,7 @@ model User {
   attemp                Attemp[]
   report                Report[]
   follows               Follow[]  @relation("following")
-  followed               Follow[]  @relation("followed")
+  followed              Follow[]  @relation("followed")
 
   @@map("users")
 }
@@ -62,6 +62,8 @@ model Post {
   userId    Int       @map("user_id")
   comments  Comment[]
   report    Report[]
+  game      Game      @relation(fields: [gameId],references: [id])
+  gameId    Int       @map("game_id")
 
   @@map("posts")
 }
@@ -81,11 +83,11 @@ model Comment {
 }
 
 model Follow {
-  id      Int      @id @default(autoincrement()) 
-  following    User     @relation(name:"following" , fields: [followingId], references: [id])
-  followingId  Int      @map("following_id")
-  followed    User     @relation(name:"followed", fields: [followedId], references: [id])
-  followedId  Int      @map("followed_id")
+  id          Int  @id @default(autoincrement())
+  following   User @relation(name: "following", fields: [followingId], references: [id])
+  followingId Int  @map("following_id")
+  followed    User @relation(name: "followed", fields: [followedId], references: [id])
+  followedId  Int  @map("followed_id")
 
   @@map("follows")
 }
@@ -105,6 +107,7 @@ model Game {
   name     String?
   skill    Skill[]
   question Question[]
+  post     Post[]
 
   @@map("games")
 }
@@ -125,8 +128,8 @@ model Reply {
   id         Int      @id @default(autoincrement())
   question   Question @relation(fields: [questionId], references: [id])
   questionId Int      @map("question_id")
-  test  String?
-  answer Boolean  
+  test       String?
+  answer     Boolean
   attemp     Attemp[]
 
   @@map("replys")

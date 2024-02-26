@@ -1,4 +1,6 @@
-const Joi = require('joi')
+const Joi = require('joi');
+const validate = require('./validator');
+
 
 
 const registerSchema = Joi.object({
@@ -51,15 +53,23 @@ const registerSchema = Joi.object({
     
 });
 
-const validateRegister = (req, res, next) => {
-    const { value, error } = registerSchema.validate(req.body);
-    if (error) {
-        throw error
+const loginSchema = Joi.object({
+    email: Joi.string().required().messages({
+      'string.empty': 'email is required',
+      'any.required': 'email is required'
+    }),
+    password: Joi.string().required().messages({
+      'string.empty': 'password is required',
+      'any.required': 'password is required'
+    })
+  });
 
-    }
-    next()
-    req.body = value
-}
 
-module.exports = validateRegister
-
+  const validateRegister = validate(registerSchema);
+  const validateLogin = validate(loginSchema);
+  
+ 
+  module.exports = {
+      validateRegister,
+      validateLogin
+  };

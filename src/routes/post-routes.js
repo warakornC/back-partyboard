@@ -8,8 +8,7 @@ const upload = require('../middleware/upload');
 
 const router = express.Router();
 
-router.post(
-  '/',
+router.post(  '/',
   upload.single('image'),
   validateCreatePost,
   postController.createPost
